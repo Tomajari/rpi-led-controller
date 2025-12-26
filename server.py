@@ -153,10 +153,13 @@ def write_message_to_sign(new_data):
             "starting sign process with command "
             + " \\\n\t".join(new_data.to_subprocess_command())
         )
-        process = subprocess.Popen(
-            args=new_data.to_subprocess_command(),
-        )
-        logging.info(f"sign process started with pid {process.pid}")
+        try:
+            process = subprocess.Popen(
+                args=new_data.to_subprocess_command(),
+            )
+            logging.info(f"sign process started with pid {process.pid}")
+        except Exception as e:
+            logging.exception("Failed to start sign process")
 
     sign_data = new_data
 
