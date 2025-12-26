@@ -33,16 +33,17 @@ class SignData:
     expiration: datetime.datetime
 
     def to_subprocess_command(self) -> str:
+        # use lstrip('#') instead of [1:] in order to handle cases where the color might not start with '#'
         return [
             os.path.join(WORKING_DIRECTORY, "sce_sign.exe"),
             "--set-speed",
             str(self.scrollSpeed) + " px/vsync",
             "--set-background-color",
-            self.backgroundColor[1:],
+            self.backgroundColor.lstrip('#'),
             "--set-font-color",
-            self.textColor[1:],
+            self.textColor.lstrip('#'),
             "--set-border-color",
-            self.borderColor[1:],
+            self.borderColor.lstrip('#'),
             "--set-font-filename",
             os.path.join(WORKING_DIRECTORY, "10x20.bdf"),
             "--set-brightness",
